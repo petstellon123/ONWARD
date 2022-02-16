@@ -7,6 +7,7 @@ members_bp = Blueprint('members_bp', __name__,
                        static_folder='static')
 
 #this route login user
+@members_bp.route("/")
 @members_bp.route("/login", methods=['GET', 'POST'])
 def login():
     all_users = User.query.all()

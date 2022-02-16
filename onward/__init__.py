@@ -17,7 +17,7 @@ def create_app():
 
         #register blueprints
         app.register_blueprint(api_bp, url_prefix='/api/')
-        app.register_blueprint(members_bp, url_prefix='/user/')
+        app.register_blueprint(members_bp)
 
         db.create_all()
 
