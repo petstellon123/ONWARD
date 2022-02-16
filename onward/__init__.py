@@ -19,7 +19,7 @@ def create_app():
         app.register_blueprint(api_bp, url_prefix='/api/')
         app.register_blueprint(members_bp)
 
-        db.create_all()
+        # db.create_all()
 
         return app
 
