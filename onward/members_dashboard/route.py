@@ -5,13 +5,14 @@ from datetime import datetime as dt
 members_bp = Blueprint('members_bp', __name__,
                        template_folder='templates',
                        static_folder='static')
-all_users = User.query.all()
-if all_users:
-    pass
-else:
-    new = User('8134829216', 'ola', 'Peter Ola', 'ola@gmail.com', '08134829216', '', 90000, 23000, 89000, False, 'Pending', dt.now())
-    db.session.add(new)
-    db.session.commit()
+# all_users = User.query.all()
+# if all_users:
+#     pass
+# else:
+#     new = User('8134829216', 'ola', 'Peter Ola', 'ola@gmail.com', '08134829216', '', 90000, 23000, 89000, False, 'Pending', dt.now())
+#     db.session.add(new)
+#     db.session.commit()
+
 #this route login user
 @members_bp.route("/")
 @members_bp.route("/login", methods=['GET', 'POST'])
