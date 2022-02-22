@@ -52,6 +52,7 @@ def members():
                 'id': data.id[n],
                 'username': data.username[n]
             })
+        n += 1
     return jsonify({
             "msg": "Successful",
             "Members data": members_db,
