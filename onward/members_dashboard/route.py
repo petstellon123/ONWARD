@@ -39,21 +39,21 @@ def user_dashboard():
     return render_template('/members_dashboard/dashboard.html', title='ONWARD OGUN STATE LGA STAFF CICS | DASHBOARD')
 
 #create users from csv file
-@members_bp.route('/new_members', methods=['GET', 'POST'])
+@members_bp.route('/members', methods=['GET', 'POST'])
 def members():
     members_db = []
-    data = pandas.read_csv("members.csv")
+    data = pandas.read_csv("onward/csv/members.csv")
     n = 0
     while n < len(data):
         members_db.append({
                 'name': data.name[n],
-                'share': data.share[n],
-                'savings': data.savings[n],
+                'share': int(data.share[n]),
+                'savings': int(data.savings[n]),
                 'id': data.id[n],
                 'username': data.username[n]
             })
         n += 1
     return jsonify({
             "msg": "Successful",
-            "Members data": members_db,
+            "Members_data": members_db,
         })
