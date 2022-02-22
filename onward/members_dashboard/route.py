@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, url_for, request, jsonify
+import pandas
+#import flask_login
 from onward.model import User, db
 from datetime import datetime as dt
 
@@ -35,3 +37,22 @@ def user_dashboard():
     # all_users = User.query.all()
     # if all_users:
     return render_template('/members_dashboard/dashboard.html', title='ONWARD OGUN STATE LGA STAFF CICS | DASHBOARD')
+
+#create users from csv file
+@members_bp.route('/new_members', methods=['GET', 'POST'])
+def members():
+    members_db = []
+    data = pandas.read_csv("members.csv")
+    n = 0
+    while n < len(data):
+        members_db.append({
+                'name': data.name[n],
+                'share': data.share[n],
+                'savings': data.savings[n],
+                'id': data.id[n],
+                'username': data.username[n]
+            })
+    return jsonify({
+            "msg": "Successful",
+            "Members data": members_db,
+        })
