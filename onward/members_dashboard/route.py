@@ -19,8 +19,25 @@ members_bp = Blueprint('members_bp', __name__,
 @members_bp.route("/")
 @members_bp.route("/login", methods=['GET', 'POST'])
 def login():
-    # all_users = User.query.all()
-    # if all_users:
+    if request.method == "POST":
+        user = request.form['username']
+        members_db = { }
+        data = pandas.read_csv("onward/csv/members.csv")
+        n = 0
+        while n < len(data):
+            members_db[data.username[n]] = {
+                'name': data.name[ n ],
+                'share': int(data.share[ n ]),
+                'savings': int(data.savings[ n ]),
+                'id': data.id[ n ],
+                'username': data.username[ n ]
+            }
+            n += 1
+        if user in members_db:
+            return render_template('/members_dashboard/dashboard.html', user=members_db[user],
+                                   title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
+        else:
+            return render_template('/members_dashboard/login.html', msg=f"Invalid username {user}", title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
     return render_template('/members_dashboard/login.html', title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
 
 
