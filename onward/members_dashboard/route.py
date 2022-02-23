@@ -30,7 +30,9 @@ def login():
                 'share': int(data.share[ n ]),
                 'savings': int(data.savings[ n ]),
                 'id': data.id[ n ],
-                'username': data.username[ n ]
+                'username': data.username[ n ],
+                'loan': (data.loan[n]).upper(),
+                'loan_amount': int(data.loan_amount[ n ])
             }
             n += 1
         if user in members_db:
@@ -67,7 +69,9 @@ def members():
                 'share': int(data.share[n]),
                 'savings': int(data.savings[n]),
                 'id': data.id[n],
-                'username': data.username[n]
+                'username': data.username[n],
+                'loan': (data.loan[n]).upper(),
+                'loan_amount': int(data.loan_amount[n])
             })
         n += 1
     return jsonify({
