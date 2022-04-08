@@ -22,19 +22,25 @@ def login():
     if request.method == "POST":
         user = request.form['username']
         members_db = { }
-        data = pandas.read_csv("onward/csv/members.csv")
+        data = pandas.read_csv("onward/csv/Onward.csv")
         n = 0
         while n < len(data):
-            members_db[data.username[n]] = {
+            members_db[str(data.phone_no[n])] = {
                 'name': data.name[ n ],
-                'share': int(data.share[ n ]),
-                'savings': int(data.savings[ n ]),
-                'id': data.id[ n ],
-                'username': data.username[ n ],
-                'loan': (data.loan[n]).upper(),
-                'loan_amount': int(data.loan_amount[ n ])
+                'card_no': data.card_no[ n ],
+                'phone_no': data.phone_no[ n ],
+                'shares': float(data.shares[ n ]),
+                'savings': float(data.savings[ n ]),
+                'kasolayo': float(data.kasolayo[n]),
+                'normal_loan': float(data.normal_loan[ n ]),
+                'commodity_loan': float(data.commodity_loan[n]),
+                'building_loan': float(data.building_loan[n]),
+                'car_loan': float(data.car_loan[n]),
+                'motorcycle_loan': float(data.motorcycle_loan[n]),
+                'bank': data.bank[n],
             }
             n += 1
+        print(members_db)
         if user in members_db:
             return render_template('/members_dashboard/dashboard.html', user=members_db[user],
                                    title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')

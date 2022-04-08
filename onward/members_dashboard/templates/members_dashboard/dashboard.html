@@ -179,7 +179,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ user['name'] }}</h6>
-              <span>{{ user['username'] }} ( {{ user['id'] }} )</span>
+              <span>{{ user['phone_no'] }} ( {{ user['card_no'] }} )</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -581,7 +581,7 @@
                       <img src="{{ url_for('static', filename='assets/img/share.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['share']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user['shares']) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -623,8 +623,7 @@
                 </div>
 
               </div>
-            </div><!-- End Revenue Card -->
-            <!-- Sales Card -->
+            </div><!-- End Revenue Card --><!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
 
@@ -649,7 +648,7 @@
                       <img src="{{ url_for('static', filename='assets/img/total.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['share'] + user['savings']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user['shares'] + user['savings']) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -684,7 +683,145 @@
                       <img src="{{ url_for('static', filename='assets/img/kasolayo.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(0) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user.kasolayo) }}</h6>
+<!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">NORMAL LOAN <span></span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <img src="{{ url_for('static', filename='assets/img/loan.png') }}" width="40px"/>
+                    </div>
+                    <div class="ps-3">
+                      <h6>₦{{ "{:,.2f}".format(user['normal_loan']) }}</h6>
+<!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">COMMODITY LOAN <span></span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <img src="{{ url_for('static', filename='assets/img/commodity.png') }}" width="40px"/>
+                    </div>
+                    <div class="ps-3">
+                      <h6>₦{{ "{:,.2f}".format(user.commodity_loan) }}</h6>
+<!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+              <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">BUILDING LOAN <span></span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <img src="{{ url_for('static', filename='assets/img/building.png') }}" width="40px"/>
+                    </div>
+                    <div class="ps-3">
+                      <h6>₦{{ "{:,.2f}".format(user['building_loan']) }}</h6>
+<!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">CAR LOAN <span></span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <img src="{{ url_for('static', filename='assets/img/car.png') }}" width="40px"/>
+                    </div>
+                    <div class="ps-3">
+                      <h6>₦{{ "{:,.2f}".format(user.car_loan) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -713,14 +850,14 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Current Loan <span>| {{ user['loan'] }}</span></h5>
+                  <h5 class="card-title">MOTORCYCLE LOAN</h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <img src="{{ url_for('static', filename='assets/img/loan.png') }}" width="40px"/>
+                      <img src="{{ url_for('static', filename='assets/img/motorcycle.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['loan_amount']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user['motorcycle_loan']) }}</h6>
 <!--                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>-->
 
                     </div>
@@ -764,9 +901,9 @@
                     <tbody>
                       <tr>
                         <th scope="row"><a href="#">CICS2457</a></th>
-                        <td>{{ user['loan'] }}</td>
+                        <td>NORMAL LOAN</td>
                         <td><a href="#" class="text-success">23rd July, 2021</a></td>
-                        <td>₦{{ "{:,.2f}".format(user['loan_amount']) }}</td>
+                        <td>₦{{ "{:,.2f}".format(user['normal_loan']) }}</td>
                         <td><span class="badge bg-success">Approved</span></td>
                       </tr>
 <!--                      <tr>-->
