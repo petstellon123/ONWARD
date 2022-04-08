@@ -21,6 +21,7 @@ members_bp = Blueprint('members_bp', __name__,
 def login():
     if request.method == "POST":
         user = request.form['username']
+        password = request.form['password']
         members_db = { }
         data = pandas.read_csv("onward/csv/Onward.csv")
         n = 0
@@ -40,12 +41,12 @@ def login():
                 'bank': data.bank[n],
             }
             n += 1
-        print(members_db)
-        if user in members_db:
+
+        if user in members_db and password == 'pass':
             return render_template('/members_dashboard/dashboard.html', user=members_db[user],
                                    title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
         else:
-            return render_template('/members_dashboard/login.html', msg=f"Invalid username {user}", title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
+            return render_template('/members_dashboard/login.html', msg=f"Invalid username or password", title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
     return render_template('/members_dashboard/login.html', title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
 
 
