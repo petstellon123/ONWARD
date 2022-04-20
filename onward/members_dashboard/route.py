@@ -89,23 +89,23 @@ def logout():
     return redirect(url_for('members_bp.login'))
 
 #create users from csv file
-@members_bp.route('/members', methods=['GET', 'POST'])
-def members():
-    members_db = []
-    data = pandas.read_csv("onward/csv/members.csv")
-    n = 0
-    while n < len(data):
-        members_db.append({
-                'name': data.name[n],
-                'share': int(data.share[n]),
-                'savings': int(data.savings[n]),
-                'id': data.id[n],
-                'username': data.username[n],
-                'loan': (data.loan[n]).upper(),
-                'loan_amount': int(data.loan_amount[n])
-            })
-        n += 1
-    return jsonify({
-            "msg": "Successful",
-            "Members_data": members_db,
-        })
+# @members_bp.route('/members', methods=['GET', 'POST'])
+# def members():
+#     members_db = []
+#     data = pandas.read_csv("onward/csv/members.csv")
+#     n = 0
+#     while n < len(data):
+#         members_db.append({
+#                 'name': data.name[n],
+#                 'share': int(data.share[n]),
+#                 'savings': int(data.savings[n]),
+#                 'id': data.id[n],
+#                 'username': data.username[n],
+#                 'loan': (data.loan[n]).upper(),
+#                 'loan_amount': int(data.loan_amount[n])
+#             })
+#         n += 1
+#     return jsonify({
+#             "msg": "Successful",
+#             "Members_data": members_db,
+#         })
