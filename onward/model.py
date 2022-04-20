@@ -1,26 +1,26 @@
 from . import db
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, unique=False, nullable=False)
-    name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
+    user_id = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(200), unique=False, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     phone_no = db.Column(db.String, unique=True, nullable=False)
     address = db.Column(db.Text, nullable=True)
     share = db.Column(db.Integer, nullable=True)
     savings = db.Column(db.Integer, nullable=True)
     kasolayo = db.Column(db.Integer, nullable=True)
     is_admin = db.Column(db.Boolean, nullable=True)
+    changed_pass = db.Column(db.Boolean, nullable=True, default=False)
     status = db.Column(db.String, nullable=False)
     date = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, user_id, password, name, email, phone_no, address, share, savings, kasolayo, is_admin, status, date):
+    def __init__(self, user_id, name, phone_no, address, share, savings, kasolayo, is_admin, status, date):
         self.user_id = user_id
-        self.password = password
         self.name = name
-        self.email = email
         self.phone_no = phone_no
         self.address = address
         self.share = share
@@ -30,9 +30,38 @@ class User(db.Model):
         self.status = status
         self.date = date
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password, method='sha256')
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
     def __repr__(self):
         return "<User {}>".format(self.user_id)
 
+class Old_loan(db.Model):
+    __tablename__ = 'old_loan'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String, unique=True, nullable=False)
+    normal = db.Column(db.Float, nullable=False)
+    building = db.Column(db.Float, nullable=False)
+    car = db.Column(db.Float, nullable=False)
+    commodity = db.Column(db.Float, nullable=False)
+    motorcycle = db.Column(db.Float, nullable=False)
+    completed = db.Column(db.Boolean, nullable=True, default=False)
+    date = db.Column(db.DateTime, nullable=True)
+
+    def __init__(self, user_id, normal, building, car, commodity, motorcycle, completed):
+        self.user_id = user_id
+        self.normal = normal
+        self.building = building
+        self.car = car
+        self.commodity = commodity
+        self.motorcycle = motorcycle
+        self.completed = completed
+
+    def __repr__(self):
+        return "<Old_loan {}>".format(self.user_id)
 
 class Loan(db.Model):
     id = db.Column(db.Integer, primary_key=True)

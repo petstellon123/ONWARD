@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, url_for, request, jsonify
+import json
+from flask import Blueprint, render_template, url_for, request, jsonify, redirect
+import requests
 import pandas
-#import flask_login
-from onward.model import User, db
+from flask_login import login_user, login_required, current_user, logout_user
+from onward.model import User, db, Old_loan
 from datetime import datetime as dt
 
 members_bp = Blueprint('members_bp', __name__,
@@ -9,6 +11,7 @@ members_bp = Blueprint('members_bp', __name__,
                        static_folder='static')
 # all_users = User.query.all()
 # if all_users:
+#     print(all_users)
 #     pass
 # else:
 #     new = User('8134829216', 'ola', 'Peter Ola', 'ola@gmail.com', '08134829216', '', 90000, 23000, 89000, False, 'Pending', dt.now())
@@ -22,31 +25,24 @@ def login():
     if request.method == "POST":
         user = request.form['username']
         password = request.form['password']
-        members_db = { }
-        data = pandas.read_csv("onward/csv/Onward.csv")
-        n = 0
-        while n < len(data):
-            members_db[str(data.phone_no[n])] = {
-                'name': data.name[ n ],
-                'card_no': data.card_no[ n ],
-                'phone_no': data.phone_no[ n ],
-                'shares': float(data.shares[ n ]),
-                'savings': float(data.savings[ n ]),
-                'kasolayo': float(data.kasolayo[n]),
-                'normal_loan': float(data.normal_loan[ n ]),
-                'commodity_loan': float(data.commodity_loan[n]),
-                'building_loan': float(data.building_loan[n]),
-                'car_loan': float(data.car_loan[n]),
-                'motorcycle_loan': float(data.motorcycle_loan[n]),
-                'bank': data.bank[n],
-            }
-            n += 1
-
-        if user in members_db and password == 'pass':
-            return render_template('/members_dashboard/dashboard.html', user=members_db[user],
-                                   title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
+        info = {
+            'username': user,
+            'password': password
+        }
+        user_log = json.dumps(info)
+        host = request.host_url
+        send = requests.post(f'{host}{url_for("api_bp.login")}', json=user_log)
+        response = send.json()
+        if response['is_user']:
+            user = User.query.filter_by(user_id = user).first()
+            login_user(user)
+            if user.changed_pass:
+                return redirect(url_for('members_bp.user_dashboard'))
+            else:
+                return redirect(url_for('members_bp.change_password'))
         else:
-            return render_template('/members_dashboard/login.html', msg=f"Invalid username or password", title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
+            msg = "invalid username or password"
+            return render_template('/members_dashboard/login.html', msg=msg, title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
     return render_template('/members_dashboard/login.html', title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
 
 
@@ -59,10 +55,38 @@ def signup():
 
 #dashboard
 @members_bp.route('/dashboard', methods=['GET', 'POST'])
+@login_required
 def user_dashboard():
-    # all_users = User.query.all()
-    # if all_users:
-    return render_template('/members_dashboard/dashboard.html', title='ONWARD OGUN STATE LGA STAFF CICS | DASHBOARD')
+    loan = Old_loan.query.filter_by(user_id=current_user.user_id).first()
+    return render_template('/members_dashboard/dashboard.html', user=current_user, loan=loan, title='ONWARD OGUN STATE LGA STAFF CICS | DASHBOARD')
+
+@members_bp.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    if request.method == "POST":
+        password = request.form[ 'password' ]
+        confirm_pass = request.form['confirm_password']
+        if password == confirm_pass:
+            user = User.query.filter_by(user_id = current_user.user_id).first()
+            user.set_password(password)
+            user.changed_pass = True
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('members_bp.user_dashboard'))
+        else:
+            msg = 'Password and Confirm password does not match.'
+            return render_template('members_dashboard/change_pass.html', msg=msg, title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
+    return render_template('members_dashboard/change_pass.html', title='ONWARD OGUN STATE LGA STAFF CICS | LOGIN')
+
+
+
+
+
+@members_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('members_bp.login'))
 
 #create users from csv file
 @members_bp.route('/members', methods=['GET', 'POST'])

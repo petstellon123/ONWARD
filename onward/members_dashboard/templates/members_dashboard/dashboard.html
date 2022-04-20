@@ -173,13 +173,13 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{ url_for('static', filename='assets/img/user.png') }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{ user['name'] }}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.name }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ user['name'] }}</h6>
-              <span>{{ user['phone_no'] }} ( {{ user['card_no'] }} )</span>
+              <span>{{ user.phone_no }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -216,7 +216,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="{{ url_for('members_bp.login') }}">
+              <a class="dropdown-item d-flex align-items-center" href="{{ url_for('members_bp.logout') }}">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -581,7 +581,7 @@
                       <img src="{{ url_for('static', filename='assets/img/share.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['shares']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user.share) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -616,7 +616,7 @@
                       <img src="{{ url_for('static', filename='assets/img/savings.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['savings']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user.savings) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
                     </div>
                   </div>
@@ -648,7 +648,7 @@
                       <img src="{{ url_for('static', filename='assets/img/total.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['shares'] + user['savings']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(user.share + user.savings) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -717,7 +717,7 @@
                       <img src="{{ url_for('static', filename='assets/img/loan.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['normal_loan']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(loan.normal) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -752,7 +752,7 @@
                       <img src="{{ url_for('static', filename='assets/img/commodity.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user.commodity_loan) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(loan.commodity) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -786,7 +786,7 @@
                       <img src="{{ url_for('static', filename='assets/img/building.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['building_loan']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(loan.building) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -821,7 +821,7 @@
                       <img src="{{ url_for('static', filename='assets/img/car.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user.car_loan) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(loan.car) }}</h6>
 <!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
 
                     </div>
@@ -857,7 +857,7 @@
                       <img src="{{ url_for('static', filename='assets/img/motorcycle.png') }}" width="40px"/>
                     </div>
                     <div class="ps-3">
-                      <h6>₦{{ "{:,.2f}".format(user['motorcycle_loan']) }}</h6>
+                      <h6>₦{{ "{:,.2f}".format(loan.motorcycle) }}</h6>
 <!--                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>-->
 
                     </div>
@@ -903,7 +903,7 @@
                         <th scope="row"><a href="#">CICS2457</a></th>
                         <td>NORMAL LOAN</td>
                         <td><a href="#" class="text-success">23rd July, 2021</a></td>
-                        <td>₦{{ "{:,.2f}".format(user['normal_loan']) }}</td>
+                        <td>₦{{ "{:,.2f}".format(loan.normal) }}</td>
                         <td><span class="badge bg-success">Approved</span></td>
                       </tr>
 <!--                      <tr>-->
